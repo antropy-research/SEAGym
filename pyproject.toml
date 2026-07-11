@@ -1,0 +1,48 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "seagym"
+version = "0.1.0"
+description = "Harbor-first trainer and engine primitives for SEAGym"
+readme = "README.md"
+requires-python = ">=3.11"
+keywords = ["evaluation", "llm-agents", "reinforcement-learning", "self-evolution"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+    "build>=1.2",
+]
+models = [
+    "litellm>=1",
+    "openai>=1",
+]
+external = [
+    "PyYAML>=6",
+]
+e2b = [
+    "tenacity>=8",
+]
+all = [
+    "build>=1.2",
+    "litellm>=1",
+    "openai>=1",
+    "PyYAML>=6",
+    "tenacity>=8",
+]
+
+[project.scripts]
+seagym = "seagym.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["seagym", "seagym.*"]

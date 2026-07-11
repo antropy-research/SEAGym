@@ -1,0 +1,10 @@
+name: seagym
+channels:
+  - defaults
+dependencies:
+  - python=3.12
+  - pip
+  - pip:
+      - httpx[socks]
+      - -e .
+      - -e reference/harbor

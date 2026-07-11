@@ -1,0 +1,235 @@
+{
+  "version": "examples-deterministic-v0",
+  "tasks": [
+    {
+      "task_id": "code_001",
+      "source": {
+        "type": "fixture",
+        "dataset": "examples-deterministic",
+        "task_name": "code_001"
+      },
+      "attributes": {
+        "domain": "code",
+        "task_type": "bugfix",
+        "difficulty": "easy",
+        "source_benchmark": "example"
+      },
+      "scoring": {
+        "main_reward_key": "reward",
+        "success_threshold": 1.0,
+        "score_transform": "binary_threshold"
+      },
+      "fixtures": {
+        "scores": {
+          "default": 1.0
+        },
+        "tokens": 100
+      }
+    },
+    {
+      "task_id": "code_002",
+      "source": {
+        "type": "fixture",
+        "dataset": "examples-deterministic",
+        "task_name": "code_002"
+      },
+      "attributes": {
+        "domain": "code",
+        "task_type": "bugfix",
+        "difficulty": "medium",
+        "source_benchmark": "example"
+      },
+      "scoring": {
+        "main_reward_key": "reward",
+        "success_threshold": 1.0,
+        "score_transform": "binary_threshold"
+      },
+      "fixtures": {
+        "scores": {
+          "default": 0.0
+        },
+        "tokens": 120
+      }
+    },
+    {
+      "task_id": "tool_001",
+      "source": {
+        "type": "fixture",
+        "dataset": "examples-deterministic",
+        "task_name": "tool_001"
+      },
+      "attributes": {
+        "domain": "tool_use",
+        "task_type": "single_call",
+        "difficulty": "easy",
+        "source_benchmark": "example"
+      },
+      "scoring": {
+        "main_reward_key": "reward",
+        "success_threshold": 1.0,
+        "score_transform": "binary_threshold"
+      },
+      "fixtures": {
+        "scores": {
+          "default": 1.0
+        },
+        "tokens": 80
+      }
+    },
+    {
+      "task_id": "tool_002",
+      "source": {
+        "type": "fixture",
+        "dataset": "examples-deterministic",
+        "task_name": "tool_002"
+      },
+      "attributes": {
+        "domain": "tool_use",
+        "task_type": "multi_call",
+        "difficulty": "medium",
+        "source_benchmark": "example"
+      },
+      "scoring": {
+        "main_reward_key": "reward",
+        "success_threshold": 1.0,
+        "score_transform": "binary_threshold"
+      },
+      "fixtures": {
+        "scores": {
+          "default": 1.0
+        },
+        "tokens": 110
+      }
+    },
+    {
+      "task_id": "code_val_001",
+      "source": {
+        "type": "fixture",
+        "dataset": "examples-deterministic",
+        "task_name": "code_val_001"
+      },
+      "attributes": {
+        "domain": "code",
+        "task_type": "bugfix",
+        "difficulty": "easy",
+        "source_benchmark": "example"
+      },
+      "scoring": {
+        "main_reward_key": "reward",
+        "success_threshold": 1.0,
+        "score_transform": "binary_threshold"
+      },
+      "fixtures": {
+        "scores": {
+          "update_validation": 1.0,
+          "default": 1.0
+        },
+        "tokens": 90
+      }
+    },
+    {
+      "task_id": "tool_val_001",
+      "source": {
+        "type": "fixture",
+        "dataset": "examples-deterministic",
+        "task_name": "tool_val_001"
+      },
+      "attributes": {
+        "domain": "tool_use",
+        "task_type": "single_call",
+        "difficulty": "easy",
+        "source_benchmark": "example"
+      },
+      "scoring": {
+        "main_reward_key": "reward",
+        "success_threshold": 1.0,
+        "score_transform": "binary_threshold"
+      },
+      "fixtures": {
+        "scores": {
+          "update_validation": 0.0,
+          "default": 0.0
+        },
+        "tokens": 95
+      }
+    },
+    {
+      "task_id": "code_test_001",
+      "source": {
+        "type": "fixture",
+        "dataset": "examples-deterministic",
+        "task_name": "code_test_001"
+      },
+      "attributes": {
+        "domain": "code",
+        "task_type": "bugfix",
+        "difficulty": "hard",
+        "source_benchmark": "example"
+      },
+      "scoring": {
+        "main_reward_key": "reward",
+        "success_threshold": 1.0,
+        "score_transform": "binary_threshold"
+      },
+      "fixtures": {
+        "scores": {
+          "id_test": 1.0,
+          "default": 1.0
+        },
+        "tokens": 140
+      }
+    },
+    {
+      "task_id": "tool_test_001",
+      "source": {
+        "type": "fixture",
+        "dataset": "examples-deterministic",
+        "task_name": "tool_test_001"
+      },
+      "attributes": {
+        "domain": "tool_use",
+        "task_type": "multi_call",
+        "difficulty": "hard",
+        "source_benchmark": "example"
+      },
+      "scoring": {
+        "main_reward_key": "reward",
+        "success_threshold": 1.0,
+        "score_transform": "binary_threshold"
+      },
+      "fixtures": {
+        "scores": {
+          "id_test": 1.0,
+          "default": 1.0
+        },
+        "tokens": 130
+      }
+    },
+    {
+      "task_id": "data_test_001",
+      "source": {
+        "type": "fixture",
+        "dataset": "examples-deterministic",
+        "task_name": "data_test_001"
+      },
+      "attributes": {
+        "domain": "data_workflow",
+        "task_type": "table_qa",
+        "difficulty": "medium",
+        "source_benchmark": "example"
+      },
+      "scoring": {
+        "main_reward_key": "reward",
+        "success_threshold": 1.0,
+        "score_transform": "binary_threshold"
+      },
+      "fixtures": {
+        "scores": {
+          "ood_test": 0.0,
+          "default": 0.0
+        },
+        "tokens": 150
+      }
+    }
+  ]
+}

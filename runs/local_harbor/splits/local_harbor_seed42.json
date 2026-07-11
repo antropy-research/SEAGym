@@ -1,0 +1,33 @@
+{
+  "description": "Small train/val/test split sampled from local Harbor datasets.",
+  "seed": 42,
+  "split_id": "local_harbor_seed42",
+  "split_version": "v1",
+  "splits": {
+    "test": [
+      "swe-bench/scikit-learn__scikit-learn-13779",
+      "terminal-bench/bn-fit-modify",
+      "terminal-bench/cobol-modernization"
+    ],
+    "train": [
+      "swe-bench/django__django-13212",
+      "swe-bench/matplotlib__matplotlib-22719",
+      "swe-bench/pydata__xarray-6744",
+      "swe-bench/scikit-learn__scikit-learn-12585",
+      "terminal-bench/log-summary-date-ranges",
+      "terminal-bench/regex-chess"
+    ],
+    "val": [
+      "swe-bench/sphinx-doc__sphinx-11510",
+      "terminal-bench/path-tracing-reverse",
+      "terminal-bench/pytorch-model-recovery"
+    ]
+  },
+  "task_pool": {
+    "domains": [
+      "code",
+      "data_workflow"
+    ],
+    "version": "local-harbor-pilot-seed42"
+  }
+}

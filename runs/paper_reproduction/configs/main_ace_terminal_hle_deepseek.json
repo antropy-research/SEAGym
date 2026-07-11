@@ -1,0 +1,135 @@
+{
+  "backend": {
+    "agent_override_timeout_sec": 1800,
+    "env": "e2b",
+    "environment_kwargs": {
+      "sandbox_timeout_sec": 2400
+    },
+    "extra_args": [
+      "--n-attempts",
+      "1",
+      "--agent-setup-timeout-multiplier",
+      "3.0"
+    ],
+    "n_concurrent": 20,
+    "name": "harbor",
+    "verifier_override_timeout_sec": 600,
+    "yes": true
+  },
+  "baseline": {
+    "class_path": "seagym.baselines.ace:ACEBaseline",
+    "config": {
+      "epochs": 1,
+      "feedback_mode": "reward_only",
+      "max_reasoning_chars": 20000,
+      "max_update_records": 20,
+      "project_dir": "repo://reference/ace",
+      "python_bin": "repo://reference/ace/.venv/bin/python",
+      "setup_commands": [
+        "if ! command -v curl >/dev/null 2>&1 || ! command -v git >/dev/null 2>&1; then if command -v apt-get >/dev/null 2>&1; then apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends ca-certificates curl git; else echo 'missing curl/git and apt-get is unavailable' >&2; exit 1; fi; fi",
+        "retry() { max=\"$1\"; shift; n=1; while true; do \"$@\" && return 0; code=$?; if [ \"$n\" -ge \"$max\" ]; then return \"$code\"; fi; sleep $((n * 10)); n=$((n + 1)); done; }; if ! command -v uv >/dev/null 2>&1; then retry 5 sh -c 'curl -LsSf https://astral.sh/uv/install.sh | sh'; fi; export PATH=\"$HOME/.local/bin:$PATH\"; retry 5 uv python install 3.12; if [ ! -x .venv/bin/python ]; then uv venv .venv --python 3.12; fi; retry 5 uv pip install --python .venv/bin/python -e . boto3 'httpx[socks]' socksio 'pydantic-ai-slim==1.101.0'"
+      ],
+      "setup_timeout_sec": 900,
+      "trace_format": "ace_standard",
+      "update_mode": "batch_reflect_then_update",
+      "update_prompt_variant": "ace_default",
+      "update_model_ref": "update_model"
+    },
+    "models": {
+      "update_model": {
+        "api_key_env": "DEEPSEEK_API_KEY",
+        "model": "deepseek/deepseek-v4-flash",
+        "provider": "deepseek"
+      }
+    },
+    "name": "ace-trace-learning"
+  },
+  "dataloader": {
+    "batching_strategy": "stratified",
+    "drop_last": false,
+    "seed": 42,
+    "shuffle_train": true,
+    "stratify_by": [
+      "attributes.source_benchmark",
+      "attributes.domain"
+    ]
+  },
+  "description": "Repaired ACE trace-learning baseline over the Terminal-Bench 2.0 + HLE text-only Math/Physics paper reproduction source. This keeps the original paper reproduction split and schedule while using ACE-standard trace materialization with reward-only public feedback.",
+  "evaluation_strategy": {
+    "final_test_views": [
+      {
+        "name": "id_test",
+        "source_split": "test",
+        "test_size": 55
+      }
+    ],
+    "replay": {
+      "enabled": false
+    },
+    "update_validation": {
+      "selection": "fixed_subset",
+      "source_split": "val",
+      "val_size": 35
+    }
+  },
+  "experiment_id": "paper_reproduction_main_ace_terminal_hle_deepseek",
+  "metrics": {
+    "aggregation": {
+      "default": "domain_macro",
+      "group_by": [
+        "attributes.source_benchmark",
+        "attributes.domain"
+      ]
+    },
+    "primary": [
+      "success_rate",
+      "mean_score",
+      "domain_macro_success_rate",
+      "update_validation_gain",
+      "validation_supported_update_rate",
+      "final_gain"
+    ],
+    "update_assessment": {
+      "cost_improvement_ratio": 0.1,
+      "enabled": true,
+      "harm_tolerance": 0.02,
+      "min_improvement": 0.02,
+      "primary_metric": "success_rate",
+      "threshold_ref": "metric_config.update_assessment.v1"
+    }
+  },
+  "output": {
+    "run_dir": "results://runs/paper_reproduction/main_ace_terminal_hle_deepseek"
+  },
+  "rollout_agent": {
+    "class_path": "seagym.rollout_agents.harbor:HarborRolloutAgent",
+    "config": {
+      "agent": "opencode",
+      "model_ref": "rollout_model"
+    },
+    "models": {
+      "rollout_model": {
+        "model": "deepseek/deepseek-v4-flash",
+        "provider": "harbor"
+      }
+    },
+    "name": "opencode"
+  },
+  "schedule": {
+    "batch_size": 20,
+    "num_epochs": 5,
+    "num_updates_per_batch": 1,
+    "test_size": 55,
+    "train_size": 80,
+    "val_size": 35
+  },
+  "seed": 42,
+  "split_manifest": {
+    "path": "../splits/terminal_hle_seed42_80_35_55.json",
+    "split_id": "terminal_hle_seed42_80_35_55"
+  },
+  "task_dataset": {
+    "path": "../tasks/terminal_hle_task_index.json",
+    "version": "terminal-hle-main:harbor-dir:terminal-bench-2+harbor-dir:hle"
+  }
+}

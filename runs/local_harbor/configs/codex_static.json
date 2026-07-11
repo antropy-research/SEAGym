@@ -1,0 +1,104 @@
+{
+  "experiment_id": "local_harbor_codex_static",
+  "description": "Static Codex black-box baseline over local Harbor tasks. Gain metrics are no-update observed deltas, not self-evolution effects.",
+  "seed": 42,
+  "task_dataset": {
+    "path": "../tasks/task_index.json",
+    "version": "local-harbor-pilot-seed42"
+  },
+  "split_manifest": {
+    "path": "../splits/local_harbor_seed42.json",
+    "split_id": "local_harbor_seed42"
+  },
+  "schedule": {
+    "train_size": 6,
+    "val_size": 3,
+    "test_size": 3,
+    "batch_size": 3,
+    "num_epochs": 1,
+    "num_updates_per_batch": 1
+  },
+  "dataloader": {
+    "shuffle_train": true,
+    "drop_last": false
+  },
+  "backend": {
+    "name": "harbor",
+    "env": "e2b",
+    "n_concurrent": 1,
+    "yes": true,
+    "extra_args": [],
+    "container_env": {
+      "HTTP_PROXY": "${SEAGYM_CONTAINER_HTTP_PROXY}",
+      "HTTPS_PROXY": "${SEAGYM_CONTAINER_HTTPS_PROXY}",
+      "ALL_PROXY": "${SEAGYM_CONTAINER_ALL_PROXY}",
+      "NO_PROXY": "${SEAGYM_CONTAINER_NO_PROXY}"
+    }
+  },
+  "baseline": {
+    "name": "codex-static",
+    "class_path": "seagym.baselines.static:StaticBaseline",
+    "config": {}
+  },
+  "evaluation_strategy": {
+    "update_validation": {
+      "source_split": "val",
+      "selection": "fixed_subset",
+      "val_size": 3
+    },
+    "replay": {
+      "enabled": true,
+      "frequency": 1,
+      "source": "seen_train_tasks",
+      "selection": "fixed_subset",
+      "replay_size": 3
+    },
+    "final_test_views": [
+      {
+        "name": "id_test",
+        "source_split": "test"
+      }
+    ]
+  },
+  "metrics": {
+    "primary": [
+      "success_rate",
+      "mean_score",
+      "domain_macro_success_rate",
+      "update_validation_gain",
+      "validation_supported_update_rate",
+      "final_gain",
+      "forgetting_rate"
+    ],
+    "aggregation": {
+      "default": "domain_macro",
+      "group_by": [
+        "attributes.domain"
+      ]
+    },
+    "update_assessment": {
+      "enabled": true,
+      "threshold_ref": "metric_config.update_assessment.v1",
+      "primary_metric": "success_rate",
+      "min_improvement": 0.02,
+      "harm_tolerance": 0.02
+    }
+  },
+  "output": {
+    "run_dir": "../../../results/runs/local_harbor_codex_static"
+  },
+  "rollout_agent": {
+    "name": "codex",
+    "class_path": "seagym.rollout_agents.harbor:HarborRolloutAgent",
+    "config": {
+      "agent": "codex",
+      "model_ref": "rollout_model"
+    },
+    "models": {
+      "rollout_model": {
+        "provider": "harbor",
+        "model": "gpt-5.3-codex"
+      }
+    }
+  }
+}

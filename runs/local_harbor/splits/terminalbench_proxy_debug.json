@@ -1,0 +1,15 @@
+{
+  "split_id": "terminalbench_proxy_debug",
+  "split_version": "v1",
+  "description": "Small real Terminal-Bench split for debugging Harbor verifier networking through SEAGym.",
+  "seed": 42,
+  "task_pool": {
+    "version": "local-harbor-pilot-seed42",
+    "domains": ["code", "data_workflow"]
+  },
+  "splits": {
+    "train": ["terminal-bench/cobol-modernization"],
+    "val": ["terminal-bench/path-tracing-reverse"],
+    "test": ["terminal-bench/log-summary-date-ranges"]
+  }
+}

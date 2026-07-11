@@ -1,0 +1,98 @@
+{
+  "experiment_id": "local_harbor_oracle_terminalbench_proxy_debug",
+  "description": "Oracle no-update full-loop debug run over real Terminal-Bench tasks, including path-tracing-reverse verifier proxy coverage.",
+  "seed": 42,
+  "task_dataset": {
+    "path": "../tasks/task_index.json",
+    "version": "local-harbor-pilot-seed42"
+  },
+  "split_manifest": {
+    "path": "../splits/terminalbench_proxy_debug.json",
+    "split_id": "terminalbench_proxy_debug"
+  },
+  "schedule": {
+    "train_size": 1,
+    "val_size": 1,
+    "test_size": 1,
+    "batch_size": 1,
+    "num_epochs": 1,
+    "num_updates_per_batch": 1
+  },
+  "dataloader": {
+    "shuffle_train": false,
+    "drop_last": false
+  },
+  "backend": {
+    "name": "harbor",
+    "env": "e2b",
+    "n_concurrent": 1,
+    "yes": true,
+    "extra_args": [],
+    "container_env": {
+      "HTTP_PROXY": "${SEAGYM_CONTAINER_HTTP_PROXY}",
+      "HTTPS_PROXY": "${SEAGYM_CONTAINER_HTTPS_PROXY}",
+      "ALL_PROXY": "${SEAGYM_CONTAINER_ALL_PROXY}",
+      "NO_PROXY": "${SEAGYM_CONTAINER_NO_PROXY}"
+    }
+  },
+  "baseline": {
+    "name": "oracle",
+    "class_path": "seagym.baselines.static:StaticBaseline",
+    "config": {}
+  },
+  "evaluation_strategy": {
+    "update_validation": {
+      "source_split": "val",
+      "selection": "fixed_subset",
+      "val_size": 1
+    },
+    "replay": {
+      "enabled": true,
+      "frequency": 1,
+      "source": "seen_train_tasks",
+      "selection": "fixed_subset",
+      "replay_size": 1
+    },
+    "final_test_views": [
+      {
+        "name": "id_test",
+        "source_split": "test"
+      }
+    ]
+  },
+  "metrics": {
+    "primary": [
+      "success_rate",
+      "mean_score",
+      "domain_macro_success_rate",
+      "update_validation_gain",
+      "validation_supported_update_rate",
+      "final_gain",
+      "forgetting_rate"
+    ],
+    "aggregation": {
+      "default": "domain_macro",
+      "group_by": [
+        "attributes.domain"
+      ]
+    },
+    "update_assessment": {
+      "enabled": true,
+      "threshold_ref": "metric_config.update_assessment.v1",
+      "primary_metric": "success_rate",
+      "min_improvement": 0.02,
+      "harm_tolerance": 0.02
+    }
+  },
+  "output": {
+    "run_dir": "../../../results/runs/local_harbor_oracle_terminalbench_proxy_debug"
+  },
+  "rollout_agent": {
+    "name": "oracle",
+    "class_path": "seagym.rollout_agents.harbor:HarborRolloutAgent",
+    "config": {
+      "agent": "oracle"
+    },
+    "models": {}
+  }
+}

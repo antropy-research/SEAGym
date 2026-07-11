@@ -1,0 +1,139 @@
+{
+  "backend": {
+    "agent_override_timeout_sec": 1800,
+    "verifier_override_timeout_sec": 600,
+    "env": "e2b",
+    "environment_kwargs": {
+      "sandbox_timeout_sec": 2400
+    },
+    "extra_args": [
+      "--n-attempts",
+      "1",
+      "--agent-setup-timeout-multiplier",
+      "3.0",
+      "--allow-environment-host",
+      "github.com",
+      "--allow-environment-host",
+      "api.github.com",
+      "--allow-environment-host",
+      "codeload.github.com",
+      "--allow-environment-host",
+      "objects.githubusercontent.com",
+      "--allow-environment-host",
+      "github-releases.githubusercontent.com",
+      "--allow-environment-host",
+      "raw.githubusercontent.com"
+    ],
+    "n_concurrent": 16,
+    "name": "harbor",
+    "yes": true
+  },
+  "baseline": {
+    "class_path": "seagym.baselines.ahe:AHEBaseline",
+    "config": {
+      "project_dir": "repo://reference/agentic-harness-engineering",
+      "setup_commands": [
+        "retry() { max=\"$1\"; shift; n=1; while true; do \"$@\" && return 0; code=$?; if [ \"$n\" -ge \"$max\" ]; then return \"$code\"; fi; sleep $((n * 10)); n=$((n + 1)); done; }; retry 5 python -m pip install 'nexau @ git+https://github.com/nex-agi/NexAU.git@v0.3.9' 'httpx[socks]' 'httpcore[socks]' socksio"
+      ],
+      "setup_timeout_sec": 900
+    },
+    "models": {
+      "update_model": {
+        "api_key_env": "DEEPSEEK_API_KEY",
+        "model": "deepseek/deepseek-v4-flash",
+        "provider": "deepseek"
+      }
+    },
+    "name": "agentic-harness-engineering"
+  },
+  "dataloader": {
+    "batching_strategy": "stratified",
+    "drop_last": false,
+    "seed": 42,
+    "shuffle_train": true,
+    "stratify_by": [
+      "attributes.source_benchmark",
+      "attributes.domain"
+    ]
+  },
+  "description": "AHE over the Terminal-Bench 2.0 + HLE text-only Math/Physics paper reproduction source, using the shared paper reproduction schedule.",
+  "evaluation_strategy": {
+    "final_test_views": [
+      {
+        "name": "id_test",
+        "source_split": "test",
+        "test_size": 55
+      }
+    ],
+    "replay": {
+      "enabled": false
+    },
+    "update_validation": {
+      "selection": "fixed_subset",
+      "source_split": "val",
+      "val_size": 35
+    }
+  },
+  "experiment_id": "paper_reproduction_main_ahe_terminal_hle_deepseek",
+  "metrics": {
+    "aggregation": {
+      "default": "domain_macro",
+      "group_by": [
+        "attributes.source_benchmark",
+        "attributes.domain"
+      ]
+    },
+    "primary": [
+      "success_rate",
+      "mean_score",
+      "domain_macro_success_rate",
+      "update_validation_gain",
+      "validation_supported_update_rate",
+      "final_gain"
+    ],
+    "update_assessment": {
+      "cost_improvement_ratio": 0.1,
+      "enabled": true,
+      "harm_tolerance": 0.02,
+      "min_improvement": 0.02,
+      "primary_metric": "success_rate",
+      "threshold_ref": "metric_config.update_assessment.v1"
+    }
+  },
+  "output": {
+    "run_dir": "results://runs/paper_reproduction/main_ahe_terminal_hle_deepseek"
+  },
+  "rollout_agent": {
+    "class_path": "seagym.rollout_agents.ahe_nexau:AHENexAURolloutAgent",
+    "config": {
+      "agent": "ahe-nexau",
+      "api_type": "openai_chat_completion",
+      "max_iterations": 300
+    },
+    "models": {
+      "rollout_model": {
+        "api_key_env": "DEEPSEEK_API_KEY",
+        "model": "deepseek/deepseek-v4-flash",
+        "provider": "deepseek"
+      }
+    },
+    "name": "ahe-nexau"
+  },
+  "schedule": {
+    "batch_size": 20,
+    "num_epochs": 5,
+    "num_updates_per_batch": 1,
+    "test_size": 55,
+    "train_size": 80,
+    "val_size": 35
+  },
+  "seed": 42,
+  "split_manifest": {
+    "path": "../splits/terminal_hle_seed42_80_35_55.json",
+    "split_id": "terminal_hle_seed42_80_35_55"
+  },
+  "task_dataset": {
+    "path": "../tasks/terminal_hle_task_index.json",
+    "version": "terminal-hle-main:harbor-dir:terminal-bench-2+harbor-dir:hle"
+  }
+}

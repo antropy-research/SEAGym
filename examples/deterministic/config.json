@@ -1,0 +1,105 @@
+{
+  "experiment_id": "examples_deterministic",
+  "description": "Minimal SEAGym dry run using deterministic fixture scores.",
+  "seed": 42,
+  "task_dataset": {
+    "path": "tasks/task_index.json",
+    "version": "examples-deterministic-v0"
+  },
+  "split_manifest": {
+    "path": "splits/split_seed42.json",
+    "split_id": "examples_deterministic_seed42"
+  },
+  "schedule": {
+    "train_size": 4,
+    "val_size": 2,
+    "test_size": 3,
+    "batch_size": 2,
+    "num_epochs": 1,
+    "num_updates_per_batch": 1
+  },
+  "dataloader": {
+    "shuffle_train": true,
+    "drop_last": false
+  },
+  "backend": {
+    "name": "deterministic"
+  },
+  "baseline": {
+    "name": "static",
+    "class_path": "seagym.baselines.static:StaticBaseline",
+    "config": {}
+  },
+  "rollout_agent": {
+    "name": "deterministic",
+    "class_path": "seagym.rollout_agents.harbor:HarborRolloutAgent",
+    "config": {
+      "agent": "deterministic"
+    },
+    "models": {}
+  },
+  "evaluation_strategy": {
+    "update_validation": {
+      "source_split": "val",
+      "selection": "fixed_subset",
+      "val_size": 2
+    },
+    "replay": {
+      "enabled": true,
+      "frequency": 1,
+      "source": "seen_train_tasks",
+      "selection": "fixed_subset",
+      "replay_size": 2
+    },
+    "final_test_views": [
+      {
+        "name": "id_test",
+        "source_split": "test",
+        "filter": {
+          "domain": [
+            "code",
+            "tool_use"
+          ]
+        }
+      },
+      {
+        "name": "ood_test",
+        "source_split": "test",
+        "filter": {
+          "domain": [
+            "data_workflow"
+          ]
+        }
+      }
+    ]
+  },
+  "metrics": {
+    "primary": [
+      "success_rate",
+      "mean_score",
+      "domain_macro_success_rate",
+      "update_validation_gain",
+      "validation_supported_update_rate",
+      "final_gain",
+      "forgetting_rate"
+    ],
+    "aggregation": {
+      "default": "domain_macro",
+      "group_by": [
+        "attributes.domain"
+      ]
+    },
+    "update_assessment": {
+      "enabled": true,
+      "threshold_ref": "metric_config.update_assessment.v1",
+      "primary_metric": "success_rate",
+      "min_improvement": 0.02,
+      "harm_tolerance": 0.02,
+      "replay_harm_tolerance": 0.02,
+      "cost_improvement_ratio": 0.1
+    }
+  },
+  "output": {
+    "run_dir": "../../results/runs/examples_deterministic"
+  }
+}

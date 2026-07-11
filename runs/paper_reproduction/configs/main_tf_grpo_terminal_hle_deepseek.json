@@ -1,0 +1,138 @@
+{
+  "backend": {
+    "agent_override_timeout_sec": 1800,
+    "env": "e2b",
+    "environment_kwargs": {
+      "sandbox_timeout_sec": 2400
+    },
+    "n_concurrent": 20,
+    "name": "harbor",
+    "verifier_override_timeout_sec": 600,
+    "yes": true
+  },
+  "baseline": {
+    "class_path": "seagym.baselines.tf_grpo:TFGRPOBaseline",
+    "config": {
+      "domain": "math",
+      "given_ground_truth": false,
+      "max_update_records": 40,
+      "max_workers": 4,
+      "only_partial_correct": false,
+      "project_dir": "repo://reference/tf-grpo",
+      "python_bin": "repo://reference/tf-grpo/.venv/bin/python",
+      "runtime_env": {
+        "DB_URL": "sqlite:////tmp/seagym_tf_grpo_trace.db"
+      },
+      "setup_commands": [
+        "if ! command -v curl >/dev/null 2>&1 || ! command -v git >/dev/null 2>&1; then if command -v apt-get >/dev/null 2>&1; then apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends ca-certificates curl git; else echo 'missing curl/git and apt-get is unavailable' >&2; exit 1; fi; fi",
+        "retry() { max=\"$1\"; shift; n=1; while true; do \"$@\" && return 0; code=$?; if [ \"$n\" -ge \"$max\" ]; then return \"$code\"; fi; sleep $((n * 10)); n=$((n + 1)); done; }; if ! command -v uv >/dev/null 2>&1; then retry 5 sh -c 'curl -LsSf https://astral.sh/uv/install.sh | sh'; fi; export PATH=\"$HOME/.local/bin:$PATH\"; retry 5 uv python install 3.12; if [ ! -x .venv/bin/python ]; then uv venv .venv --python 3.12; fi; retry 5 uv pip install --python .venv/bin/python -e . 'httpx[socks]' socksio arize-phoenix-client arize-phoenix-otel"
+      ],
+      "setup_timeout_sec": 900,
+      "skip_metadata_fallback": true,
+      "update_prompt_profile": "meta"
+    },
+    "models": {
+      "update_model": {
+        "api_key_env": "DEEPSEEK_API_KEY",
+        "model": "deepseek/deepseek-v4-flash",
+        "provider": "deepseek"
+      }
+    },
+    "name": "tf-grpo-experience-learning",
+    "state": {
+      "local_dir": "results://runs/paper_reproduction/main_tf_grpo_terminal_hle_deepseek/agent_state/tf-grpo"
+    }
+  },
+  "dataloader": {
+    "batching_strategy": "stratified",
+    "drop_last": false,
+    "seed": 42,
+    "shuffle_train": true,
+    "stratify_by": [
+      "attributes.source_benchmark",
+      "attributes.domain"
+    ]
+  },
+  "description": "TF-GRPO adapter-fix rerun over the mixed Terminal-Bench 2.0 + HLE text-only Math/Physics paper reproduction source. Uses train-only n_attempts=2 grouped rollout evidence, real Harbor trajectory update evidence, and the generic meta update prompt profile while retaining TF-GRPO's math native updater module.",
+  "evaluation_strategy": {
+    "final_test_views": [
+      {
+        "name": "id_test",
+        "source_split": "test",
+        "test_size": 55
+      }
+    ],
+    "replay": {
+      "enabled": false
+    },
+    "update_validation": {
+      "selection": "fixed_subset",
+      "source_split": "val",
+      "val_size": 35
+    }
+  },
+  "experiment_id": "paper_reproduction_main_tf_grpo_terminal_hle_deepseek",
+  "metrics": {
+    "aggregation": {
+      "default": "domain_macro",
+      "group_by": [
+        "attributes.source_benchmark",
+        "attributes.domain"
+      ]
+    },
+    "primary": [
+      "success_rate",
+      "mean_score",
+      "domain_macro_success_rate",
+      "update_validation_gain",
+      "validation_supported_update_rate",
+      "final_gain"
+    ],
+    "update_assessment": {
+      "cost_improvement_ratio": 0.1,
+      "enabled": true,
+      "harm_tolerance": 0.02,
+      "min_improvement": 0.02,
+      "primary_metric": "success_rate",
+      "threshold_ref": "metric_config.update_assessment.v1"
+    }
+  },
+  "output": {
+    "run_dir": "results://runs/paper_reproduction/main_tf_grpo_terminal_hle_deepseek"
+  },
+  "rollout_agent": {
+    "class_path": "seagym.rollout_agents.harbor:HarborRolloutAgent",
+    "config": {
+      "agent": "opencode",
+      "attempt_modes": [
+        "train"
+      ],
+      "model_ref": "rollout_model",
+      "n_attempts": 2
+    },
+    "models": {
+      "rollout_model": {
+        "model": "deepseek/deepseek-v4-flash",
+        "provider": "harbor"
+      }
+    },
+    "name": "opencode"
+  },
+  "schedule": {
+    "batch_size": 20,
+    "num_epochs": 5,
+    "num_updates_per_batch": 1,
+    "test_size": 55,
+    "train_size": 80,
+    "val_size": 35
+  },
+  "seed": 42,
+  "split_manifest": {
+    "path": "../splits/terminal_hle_seed42_80_35_55.json",
+    "split_id": "terminal_hle_seed42_80_35_55"
+  },
+  "task_dataset": {
+    "path": "../tasks/terminal_hle_task_index.json",
+    "version": "terminal-hle-main:harbor-dir:terminal-bench-2+harbor-dir:hle"
+  }
+}

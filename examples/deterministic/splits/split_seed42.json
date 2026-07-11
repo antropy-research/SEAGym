@@ -1,0 +1,31 @@
+{
+  "split_id": "examples_deterministic_seed42",
+  "split_version": "v1",
+  "description": "Minimal split for the deterministic SEAGym example.",
+  "seed": 42,
+  "task_pool": {
+    "version": "examples-deterministic-v0",
+    "domains": [
+      "code",
+      "tool_use",
+      "data_workflow"
+    ]
+  },
+  "splits": {
+    "train": [
+      "code_001",
+      "code_002",
+      "tool_001",
+      "tool_002"
+    ],
+    "val": [
+      "code_val_001",
+      "tool_val_001"
+    ],
+    "test": [
+      "code_test_001",
+      "tool_test_001",
+      "data_test_001"
+    ]
+  }
+}

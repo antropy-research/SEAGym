@@ -1,0 +1,385 @@
+{
+  "tasks": [
+    {
+      "attributes": {
+        "difficulty": "hard",
+        "domain": "data_workflow",
+        "skills": [
+          "bayesian-network",
+          "stats",
+          "scientific-computing"
+        ],
+        "source_benchmark": "terminal-bench-2",
+        "tags": [
+          "bayesian-network",
+          "stats"
+        ],
+        "task_type": "scientific-computing"
+      },
+      "fixtures": {},
+      "scoring": {
+        "main_reward_key": "reward",
+        "score_transform": "identity",
+        "success_threshold": 1.0
+      },
+      "source": {
+        "dataset": "terminal-bench-2",
+        "dataset_path": "data://terminal-bench-2",
+        "dataset_version": "1.0",
+        "local_path": "data://terminal-bench-2/bn-fit-modify",
+        "registry_task_name": "terminal-bench/bn-fit-modify",
+        "task_name": "bn-fit-modify",
+        "type": "harbor"
+      },
+      "task_id": "terminal-bench/bn-fit-modify",
+      "visibility": {}
+    },
+    {
+      "attributes": {
+        "difficulty": "easy",
+        "domain": "code",
+        "skills": [
+          "coding",
+          "software-engineering"
+        ],
+        "source_benchmark": "terminal-bench-2",
+        "tags": [
+          "coding"
+        ],
+        "task_type": "software-engineering"
+      },
+      "fixtures": {},
+      "scoring": {
+        "main_reward_key": "reward",
+        "score_transform": "identity",
+        "success_threshold": 1.0
+      },
+      "source": {
+        "dataset": "terminal-bench-2",
+        "dataset_path": "data://terminal-bench-2",
+        "dataset_version": "1.0",
+        "local_path": "data://terminal-bench-2/cobol-modernization",
+        "registry_task_name": "terminal-bench/cobol-modernization",
+        "task_name": "cobol-modernization",
+        "type": "harbor"
+      },
+      "task_id": "terminal-bench/cobol-modernization",
+      "visibility": {}
+    },
+    {
+      "attributes": {
+        "difficulty": "medium",
+        "domain": "data_workflow",
+        "skills": [
+          "log-analysis",
+          "report-generation",
+          "data-processing"
+        ],
+        "source_benchmark": "terminal-bench-2",
+        "tags": [
+          "log-analysis",
+          "report-generation",
+          "data-processing"
+        ],
+        "task_type": "data-processing"
+      },
+      "fixtures": {},
+      "scoring": {
+        "main_reward_key": "reward",
+        "score_transform": "identity",
+        "success_threshold": 1.0
+      },
+      "source": {
+        "dataset": "terminal-bench-2",
+        "dataset_path": "data://terminal-bench-2",
+        "dataset_version": "1.0",
+        "local_path": "data://terminal-bench-2/log-summary-date-ranges",
+        "registry_task_name": "terminal-bench/log-summary-date-ranges",
+        "task_name": "log-summary-date-ranges",
+        "type": "harbor"
+      },
+      "task_id": "terminal-bench/log-summary-date-ranges",
+      "visibility": {}
+    },
+    {
+      "attributes": {
+        "difficulty": "hard",
+        "domain": "code",
+        "skills": [
+          "images",
+          "software-engineering"
+        ],
+        "source_benchmark": "terminal-bench-2",
+        "tags": [
+          "images"
+        ],
+        "task_type": "software-engineering"
+      },
+      "fixtures": {},
+      "scoring": {
+        "main_reward_key": "reward",
+        "score_transform": "identity",
+        "success_threshold": 1.0
+      },
+      "source": {
+        "dataset": "terminal-bench-2",
+        "dataset_path": "data://terminal-bench-2",
+        "dataset_version": "1.0",
+        "local_path": "data://terminal-bench-2/path-tracing-reverse",
+        "registry_task_name": "terminal-bench/path-tracing-reverse",
+        "task_name": "path-tracing-reverse",
+        "type": "harbor"
+      },
+      "task_id": "terminal-bench/path-tracing-reverse",
+      "visibility": {}
+    },
+    {
+      "attributes": {
+        "difficulty": "medium",
+        "domain": "code",
+        "skills": [
+          "coding",
+          "pytorch",
+          "machine-learning",
+          "model-training"
+        ],
+        "source_benchmark": "terminal-bench-2",
+        "tags": [
+          "coding",
+          "pytorch",
+          "machine-learning"
+        ],
+        "task_type": "model-training"
+      },
+      "fixtures": {},
+      "scoring": {
+        "main_reward_key": "reward",
+        "score_transform": "identity",
+        "success_threshold": 1.0
+      },
+      "source": {
+        "dataset": "terminal-bench-2",
+        "dataset_path": "data://terminal-bench-2",
+        "dataset_version": "1.0",
+        "local_path": "data://terminal-bench-2/pytorch-model-recovery",
+        "registry_task_name": "terminal-bench/pytorch-model-recovery",
+        "task_name": "pytorch-model-recovery",
+        "type": "harbor"
+      },
+      "task_id": "terminal-bench/pytorch-model-recovery",
+      "visibility": {}
+    },
+    {
+      "attributes": {
+        "difficulty": "hard",
+        "domain": "code",
+        "skills": [
+          "software-engineering"
+        ],
+        "source_benchmark": "terminal-bench-2",
+        "tags": [
+          "software-engineering"
+        ],
+        "task_type": "software-engineering"
+      },
+      "fixtures": {},
+      "scoring": {
+        "main_reward_key": "reward",
+        "score_transform": "identity",
+        "success_threshold": 1.0
+      },
+      "source": {
+        "dataset": "terminal-bench-2",
+        "dataset_path": "data://terminal-bench-2",
+        "dataset_version": "1.0",
+        "local_path": "data://terminal-bench-2/regex-chess",
+        "registry_task_name": "terminal-bench/regex-chess",
+        "task_name": "regex-chess",
+        "type": "harbor"
+      },
+      "task_id": "terminal-bench/regex-chess",
+      "visibility": {}
+    },
+    {
+      "attributes": {
+        "difficulty": "1-4 hours",
+        "domain": "code",
+        "skills": [],
+        "source_benchmark": "swe-bench-verified",
+        "tags": [
+          "debugging",
+          "swe-bench"
+        ],
+        "task_type": "debugging"
+      },
+      "fixtures": {},
+      "scoring": {
+        "main_reward_key": "reward",
+        "score_transform": "identity",
+        "success_threshold": 1.0
+      },
+      "source": {
+        "dataset": "swe-bench-verified",
+        "dataset_path": "data://swe-bench-verified",
+        "dataset_version": "1.0",
+        "local_path": "data://swe-bench-verified/django__django-13212",
+        "registry_task_name": "swe-bench/django__django-13212",
+        "task_name": "django__django-13212",
+        "type": "harbor"
+      },
+      "task_id": "swe-bench/django__django-13212",
+      "visibility": {}
+    },
+    {
+      "attributes": {
+        "difficulty": "<15 min fix",
+        "domain": "code",
+        "skills": [],
+        "source_benchmark": "swe-bench-verified",
+        "tags": [
+          "debugging",
+          "swe-bench"
+        ],
+        "task_type": "debugging"
+      },
+      "fixtures": {},
+      "scoring": {
+        "main_reward_key": "reward",
+        "score_transform": "identity",
+        "success_threshold": 1.0
+      },
+      "source": {
+        "dataset": "swe-bench-verified",
+        "dataset_path": "data://swe-bench-verified",
+        "dataset_version": "1.0",
+        "local_path": "data://swe-bench-verified/matplotlib__matplotlib-22719",
+        "registry_task_name": "swe-bench/matplotlib__matplotlib-22719",
+        "task_name": "matplotlib__matplotlib-22719",
+        "type": "harbor"
+      },
+      "task_id": "swe-bench/matplotlib__matplotlib-22719",
+      "visibility": {}
+    },
+    {
+      "attributes": {
+        "difficulty": "15 min - 1 hour",
+        "domain": "code",
+        "skills": [],
+        "source_benchmark": "swe-bench-verified",
+        "tags": [
+          "debugging",
+          "swe-bench"
+        ],
+        "task_type": "debugging"
+      },
+      "fixtures": {},
+      "scoring": {
+        "main_reward_key": "reward",
+        "score_transform": "identity",
+        "success_threshold": 1.0
+      },
+      "source": {
+        "dataset": "swe-bench-verified",
+        "dataset_path": "data://swe-bench-verified",
+        "dataset_version": "1.0",
+        "local_path": "data://swe-bench-verified/pydata__xarray-6744",
+        "registry_task_name": "swe-bench/pydata__xarray-6744",
+        "task_name": "pydata__xarray-6744",
+        "type": "harbor"
+      },
+      "task_id": "swe-bench/pydata__xarray-6744",
+      "visibility": {}
+    },
+    {
+      "attributes": {
+        "difficulty": "<15 min fix",
+        "domain": "code",
+        "skills": [],
+        "source_benchmark": "swe-bench-verified",
+        "tags": [
+          "debugging",
+          "swe-bench"
+        ],
+        "task_type": "debugging"
+      },
+      "fixtures": {},
+      "scoring": {
+        "main_reward_key": "reward",
+        "score_transform": "identity",
+        "success_threshold": 1.0
+      },
+      "source": {
+        "dataset": "swe-bench-verified",
+        "dataset_path": "data://swe-bench-verified",
+        "dataset_version": "1.0",
+        "local_path": "data://swe-bench-verified/scikit-learn__scikit-learn-12585",
+        "registry_task_name": "swe-bench/scikit-learn__scikit-learn-12585",
+        "task_name": "scikit-learn__scikit-learn-12585",
+        "type": "harbor"
+      },
+      "task_id": "swe-bench/scikit-learn__scikit-learn-12585",
+      "visibility": {}
+    },
+    {
+      "attributes": {
+        "difficulty": "<15 min fix",
+        "domain": "code",
+        "skills": [],
+        "source_benchmark": "swe-bench-verified",
+        "tags": [
+          "debugging",
+          "swe-bench"
+        ],
+        "task_type": "debugging"
+      },
+      "fixtures": {},
+      "scoring": {
+        "main_reward_key": "reward",
+        "score_transform": "identity",
+        "success_threshold": 1.0
+      },
+      "source": {
+        "dataset": "swe-bench-verified",
+        "dataset_path": "data://swe-bench-verified",
+        "dataset_version": "1.0",
+        "local_path": "data://swe-bench-verified/scikit-learn__scikit-learn-13779",
+        "registry_task_name": "swe-bench/scikit-learn__scikit-learn-13779",
+        "task_name": "scikit-learn__scikit-learn-13779",
+        "type": "harbor"
+      },
+      "task_id": "swe-bench/scikit-learn__scikit-learn-13779",
+      "visibility": {}
+    },
+    {
+      "attributes": {
+        "difficulty": "1-4 hours",
+        "domain": "code",
+        "skills": [],
+        "source_benchmark": "swe-bench-verified",
+        "tags": [
+          "debugging",
+          "swe-bench"
+        ],
+        "task_type": "debugging"
+      },
+      "fixtures": {},
+      "scoring": {
+        "main_reward_key": "reward",
+        "score_transform": "identity",
+        "success_threshold": 1.0
+      },
+      "source": {
+        "dataset": "swe-bench-verified",
+        "dataset_path": "data://swe-bench-verified",
+        "dataset_version": "1.0",
+        "local_path": "data://swe-bench-verified/sphinx-doc__sphinx-11510",
+        "registry_task_name": "swe-bench/sphinx-doc__sphinx-11510",
+        "task_name": "sphinx-doc__sphinx-11510",
+        "type": "harbor"
+      },
+      "task_id": "swe-bench/sphinx-doc__sphinx-11510",
+      "visibility": {}
+    }
+  ],
+  "version": "local-harbor-pilot-seed42"
+}

@@ -1,0 +1,14 @@
+[submodule "reference/harbor"]
+	path = reference/harbor
+	url = https://github.com/harbor-framework/harbor.git
+[submodule "reference/agentic-harness-engineering"]
+	path = reference/agentic-harness-engineering
+	url = https://github.com/china-qijizhifeng/agentic-harness-engineering.git
+[submodule "reference/ace"]
+	path = reference/ace
+	url = https://github.com/kayba-ai/agentic-context-engine.git
+	branch = main
+[submodule "reference/tf-grpo"]
+	path = reference/tf-grpo
+	url = https://github.com/TencentCloudADP/youtu-agent.git
+	branch = training_free_GRPO
