@@ -227,3 +227,8 @@ python -m pip install -e "reference/harbor[e2b]"
   url = {https://arxiv.org/abs/2606.17546}
 }
 ```
+
+## License
+
+This project is licensed under the Apache License, Version 2.0. See
+`LICENSE` for details.
